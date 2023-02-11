@@ -1,27 +1,56 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { useState } from 'react';
 import COLORS from "../../conts/colors";
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { View, Text, StyleSheet, TextInput } from "react-native";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Colors } from "react-native/Libraries/NewAppScreen";
+
+
+
 const Input = ({
     lable,
     iconName,
     error,
     password,
     onFocus = () => { },
-    ...prop
+    ...props
 }) => {
+    const [isFocus, setIsFocus] = useState(false);
     return (
         <View style={{ marginBottom: 20 }}>
             <Text style={style.lable}>
                 {lable}
             </Text>
-            <View style={style.inputContainer}>
-                <MIcon name={iconName}
+            <View style={[style.inputContainer,
+            {
+                borderColor: error
+                    ? COLORS.red
+                    : isFocus
+                        ? COLORS.darkBlue
+                        : COLORS.light,
+            }
+            ]}>
+                <Icon
+                    name={iconName}
                     style={{
-                        fontSize: 22,
+                        fontSize: 28,
                         color: COLORS.darkBlue,
                         marginRight: 10
                     }} />
+                <TextInput
+                    style={{
+                        color: COLORS.darkBlue,
+                        flex: 1
+                    }}
+                    autoCorrect={false}
+                    onFocus={() => {
+                        onFocus();
+                        setIsFocus(true);
+                    }}
+                    onBlur={() => {
+                        setIsFocus(false);
+                    }}
+                    {...props} />
             </View>
         </View>
     );
@@ -36,7 +65,7 @@ const style = StyleSheet.create({
     inputContainer: {
         flexDirection: 'row',
         height: 50,
-        backgroundColor: COLORS.grey,
+        backgroundColor: COLORS.light,
         paddingHorizontal: 15,
         borderWidth: 0.5,
         alignItems: 'center',

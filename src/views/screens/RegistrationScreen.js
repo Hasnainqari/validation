@@ -33,7 +33,12 @@ const RegistrationScreen = ({ navigation }) => {
                     Enter Your Details to Register
                 </Text>
                 <View style={{ marginVertical: 20 }}>
-                    <Input iconName={email - outline} lable='Email' />
+                    <Input 
+                    placeholder='Enter You Email Address' 
+                    iconName="email-outline" 
+                    lable='Email' 
+                    error='Input email'
+                    />
                 </View>
             </ScrollView>
 
